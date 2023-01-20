@@ -38,7 +38,7 @@ namespace RazorApp.Pages
             using(var controller = new GpioController())
             {
                 controller.OpenPin(11,PinMode.Output);
-                controller.Write(11, gpIo17.Speed);
+                controller.Write(11, PinValue.High);
             }
             _hubContext.Clients.All.SendAsync("SetEnabled", this.Enabled);
         }
