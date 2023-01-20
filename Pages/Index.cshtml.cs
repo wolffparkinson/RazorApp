@@ -9,16 +9,14 @@ namespace RazorApp.Pages
 {
     public class IndexModel : PageModel
     {
-        private readonly ILogger<IndexModel> _logger;
-        private readonly IHubContext<FanHub> _hubContext;
+        private readonly IHubContext<SignalRHub> _hubContext;
 
         public int Speed { get; set; }
         public bool Enabled { get; set; }
 
 
-        public IndexModel(ILogger<IndexModel> logger,IHubContext<FanHub> hubContext)
+        public IndexModel(IHubContext<SignalRHub> hubContext)
         {
-            _logger = logger;
             _hubContext = hubContext;
         }
 
@@ -28,10 +26,10 @@ namespace RazorApp.Pages
 
         }
 
-        public void OnPostSubmit(FanModel fan)
+        public void OnPostSubmit(GPIO17Model gpIo17)
         {
-            this.Speed = fan.Speed;
-            this.Enabled= fan.Enabled;
+            this.Speed = gpIo17.Speed;
+            this.Enabled= gpIo17.Enabled;
 
             Console.WriteLine($"Speed : {this.Speed}s");
             Console.WriteLine($"Enabled : {this.Enabled}");
@@ -41,7 +39,7 @@ namespace RazorApp.Pages
             using(var controller = new GpioController())
             {
                 controller.OpenPin(11,PinMode.Output);
-                controller.Write(11, fan.Speed);
+                controller.Write(11, gpIo17.Speed);
             }
         }
     }

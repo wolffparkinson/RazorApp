@@ -23,6 +23,6 @@ app.UseRouting();
 app.UseAuthorization();
 
 app.MapRazorPages();
-app.MapHub<FanHub>("/fanHub");
+app.MapHub<SignalRHub>("/hub");
 
 app.Run();

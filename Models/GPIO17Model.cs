@@ -2,7 +2,7 @@
 
 namespace RazorApp.Models
 {
-    public class FanModel
+    public class GPIO17Model
     {
         [BindProperty]
         public int Speed { get; set; }
