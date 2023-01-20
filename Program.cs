@@ -1,7 +1,9 @@
+using SignalRChat.Hubs;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
+builder.Services.AddSignalR();
 
 var app = builder.Build();
 
@@ -21,5 +23,6 @@ app.UseRouting();
 app.UseAuthorization();
 
 app.MapRazorPages();
+app.MapHub<FanHub>("/fanHub");
 
 app.Run();
