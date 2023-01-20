@@ -34,13 +34,13 @@ namespace RazorApp.Pages
             Console.WriteLine($"Speed : {this.Speed}s");
             Console.WriteLine($"Enabled : {this.Enabled}");
 
-            _hubContext.Clients.All.SendAsync("SetEnabled", this.Enabled);
             // return;
             using(var controller = new GpioController())
             {
                 controller.OpenPin(11,PinMode.Output);
                 controller.Write(11, gpIo17.Speed);
             }
+            _hubContext.Clients.All.SendAsync("SetEnabled", this.Enabled);
         }
     }
 
