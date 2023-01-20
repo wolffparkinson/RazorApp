@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.SignalR;
 using RazorApp.Models;
+using SignalRChat.Hubs;
 using System.Device.Gpio;
 
 namespace RazorApp.Pages
@@ -8,14 +10,16 @@ namespace RazorApp.Pages
     public class IndexModel : PageModel
     {
         private readonly ILogger<IndexModel> _logger;
+        private readonly IHubContext<FanHub> _hubContext;
 
         public int Speed { get; set; }
         public bool Enabled { get; set; }
 
 
-        public IndexModel(ILogger<IndexModel> logger)
+        public IndexModel(ILogger<IndexModel> logger,IHubContext<FanHub> hubContext)
         {
             _logger = logger;
+            _hubContext = hubContext;
         }
 
 
@@ -32,6 +36,7 @@ namespace RazorApp.Pages
             Console.WriteLine($"Speed : {this.Speed}s");
             Console.WriteLine($"Enabled : {this.Enabled}");
 
+            _hubContext.Clients.All.SendAsync("SetEnabled", this.Enabled);
             // return;
             using(var controller = new GpioController())
             {
