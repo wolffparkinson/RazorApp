@@ -32,11 +32,11 @@ namespace RazorApp.Pages
             Console.WriteLine($"Speed : {this.Speed}s");
             Console.WriteLine($"Enabled : {this.Enabled}");
 
-            return;
+            // return;
             using(var controller = new GpioController())
             {
-                controller.OpenPin(17,PinMode.Output);
-                controller.Write(17, fan.Speed);
+                controller.OpenPin(11,PinMode.Output);
+                controller.Write(11, fan.Speed);
             }
         }
     }
